@@ -15,9 +15,9 @@ class Controller {
 
     async getByKey(req, res) {
         const { id } = req.params;
-        let response = await this.service.getByKey(id);
+        // let response = await this.service.getByKey(id);
 
-        return res.status(200).send(await this.service.getByKey(req.query));
+        return res.status(200).send(await this.service.getByKey(id));
     }
 
     async insert(req, res) {

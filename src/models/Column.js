@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 import slugify from "./Post";
 
-class Board {
+class Column {
 
     initSchema() {
         const schema = new Schema({
@@ -14,6 +14,11 @@ class Board {
             description: {
                 type: String,
                 required: false,
+            },
+            boardId: {
+                type: [String],
+                required: true,
+                default: []
             }
         }, { timestamps: true });
         schema.pre(
@@ -30,12 +35,12 @@ class Board {
             }
         );
         schema.plugin(uniqueValidator);
-        mongoose.model("boards", schema);
+        mongoose.model("columns", schema);
     }
     getInstance() {
         this.initSchema();
-        return mongoose.model("boards");
+        return mongoose.model("columns");
     }
 }
 
-export default Board
+export default Column

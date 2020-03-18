@@ -11,7 +11,6 @@ class Service {
     }
 
     async getAll(query) {
-        console.log("boop boop")
         let { skip, limit } = query;
 
         skip = skip ? Number(skip) : 0;
@@ -52,7 +51,6 @@ class Service {
 
     async getByKey(id) {
         // let { id } = query;
-        console.log("$$$$$$$", id)
         try {
             let object_id = new mongoose.mongo.ObjectId(id);
             let item = await this.model.findById(object_id);
@@ -76,7 +74,6 @@ class Service {
 
     async insert(data) {
         try {
-            console.log("*****", data)
             let item = await this.model.create(data);
             if (item)
                 return {

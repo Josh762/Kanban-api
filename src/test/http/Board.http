@@ -8,7 +8,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:5000/api/board
+GET http://localhost:5000/api/board/5e7276c97d3c82114dae70c9
 Content-Type: application/json
 
 ###
