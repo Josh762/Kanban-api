@@ -4,12 +4,14 @@ class Service {
     constructor(model) {
         this.model = model;
         this.getAll = this.getAll.bind(this);
+        this.getByKey = this.getByKey.bind(this);
         this.insert = this.insert.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
     }
 
     async getAll(query) {
+        console.log("boop boop")
         let { skip, limit } = query;
 
         skip = skip ? Number(skip) : 0;
@@ -48,10 +50,27 @@ class Service {
         }
     }
 
-    async getById(query) {
+    async getByKey(id) {
         // let { id } = query;
-        console.log(query.id);
-
+        console.log("$$$$$$$", id)
+        try {
+            let object_id = new mongoose.mongo.ObjectId(id);
+            let item = await this.model.findById(object_id);
+            return {
+                error: false,
+                statusCode: 200,
+                item
+            };
+        }
+        catch(error) {
+            console.log("error", error);
+            return {
+                error: true,
+                statusCode: 500,
+                message: error.errmsg || "Not able to get with id: " + id,
+                errors: error.errors
+            };
+        }
 
     }
 

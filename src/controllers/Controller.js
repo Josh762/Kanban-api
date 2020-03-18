@@ -3,6 +3,7 @@ class Controller {
     constructor(service) {
         this.service = service;
         this.getAll = this.getAll.bind(this);
+        this.getByKey = this.getByKey.bind(this);
         this.insert = this.insert.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
@@ -12,8 +13,11 @@ class Controller {
         return res.status(200).send(await this.service.getAll(req.query));
     }
 
-    async getById(req, res) {
-        return res.status(200).send(await this.service.getById(req.query));
+    async getByKey(req, res) {
+        const { id } = req.params;
+        let response = await this.service.getByKey(id);
+
+        return res.status(200).send(await this.service.getByKey(req.query));
     }
 
     async insert(req, res) {
