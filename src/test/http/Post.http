@@ -1,3 +1,13 @@
+POST http://localhost:5000/api/board
+Content-Type: application/json
+
+{
+  "title": "post 12",
+  "description": "subtitle post 12"
+}
+
+###
+
 GET http://localhost:5000/api/post/
 Accept: application/json
 

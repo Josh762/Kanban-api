@@ -1,6 +1,7 @@
 
 import mongoose, { Schema } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
+import slugify from "./Post";
 
 class Board {
 
@@ -19,7 +20,20 @@ class Board {
                 required: true,
                 default: []
             }
-        })
+        }, { timestamps: true });
+        schema.pre(
+            "save",
+            function(next) {
+                let post = this;
+                if (!post.isModified("title")) {
+                    return next();
+                }
+                return next();
+            },
+            function(err) {
+                next(err);
+            }
+        );
         schema.plugin(uniqueValidator);
         mongoose.model("boards", schema);
     }

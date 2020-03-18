@@ -57,6 +57,7 @@ class Service {
 
     async insert(data) {
         try {
+            console.log("*****", data)
             let item = await this.model.create(data);
             if (item)
                 return {
