@@ -1,0 +1,18 @@
+GET http://localhost:5000/api/post/
+Accept: application/json
+
+###
+
+
+POST http://localhost:5000/api/post
+Content-Type: application/json
+
+{
+  "title": "post 1",
+  "subtitle": "subtitle post 1",
+  "content": "content post 1"
+}
+
+###
+
+
