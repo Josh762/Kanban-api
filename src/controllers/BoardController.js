@@ -14,4 +14,4 @@ class BoardController extends Controller {
     }
 }
 
-export default new BoardController(boardService)
+export default new BoardController(boardService);

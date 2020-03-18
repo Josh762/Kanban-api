@@ -20,5 +20,13 @@ class Board {
                 default: []
             }
         })
+        schema.plugin(uniqueValidator);
+        mongoose.model("boards", schema);
+    }
+    getInstance() {
+        this.initSchema();
+        return mongoose.model("boards");
     }
 }
+
+export default Board

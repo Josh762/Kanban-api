@@ -8,7 +8,7 @@
   "scripts": {
     "test": "jest",
     "start": "babel-node index.js",
-    "dev:start": "clear; nodemon --exec babel-node index.js"
+    "dev:start": "nodemon --exec babel-node index.js"
   },
   "dependencies": {
     "@babel/core": "^7.8.7",
