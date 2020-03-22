@@ -1,7 +1,6 @@
 
 import mongoose, { Schema } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
-import slugify from "./Post";
 
 class Column {
 

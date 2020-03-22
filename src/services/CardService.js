@@ -1,9 +1,7 @@
 
-import Service from "./Service";
 
-class CardService extends Service {
+class CardService {
     constructor() {
-        super();
     }
 }
 

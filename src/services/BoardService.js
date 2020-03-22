@@ -1,6 +1,4 @@
 
-import Service from "./Service";
-import ColumnService from "./ColumnService";
 import DataService from '../dataAccess/DataService';
 import BoardModel from '../models/dataModels/Board';
 import ColumnModel from '../models/dataModels/Column';
@@ -9,17 +7,13 @@ import CardModel from '../models/dataModels/Card';
 import SuccessFacade from '../models/facades/SuccessFacade';
 import BoardFacade from '../models/facades/BoardFacade';
 
-class BoardService extends Service {
+class BoardService {
 
     BoardDataService = new DataService(new BoardModel().getInstance());
     ColumnDataService = new DataService(new ColumnModel().getInstance());
     CardDataService = new DataService(new CardModel().getInstance());
     boardFacade = new BoardFacade();
-    constructor(model) {
-        // super(model);
-        super();
-        // this.BoardDataService = this.BoardDataService.bind(this);
-        // this.ColumnDataService = this.ColumnDataService.bind(this);
+    constructor() {
         this.getBoard = this.getBoard.bind(this);
         this.test = this.test.bind(this);
     }
@@ -30,7 +24,7 @@ class BoardService extends Service {
             let columns = await this.ColumnDataService._getByKeyValue('boardId', id);
             let cards = {};
 
-            for (const column of columns.data) { // TODO this is broken?
+            for (const column of columns.data) {
                 const colId = column._id;
                 let card = await this.CardDataService._getByKeyValue('columnId', colId);
                 cards[column.id] = card.data;
