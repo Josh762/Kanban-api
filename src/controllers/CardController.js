@@ -1,13 +1,13 @@
 
 import Controller from './Controller';
-import ColumnService from "./../services/ColumnService";
-import Column from '../models/dataModels/Column';
+import ColumnService from "./../services/CardService";
+import Column from '../models/dataModels/Card';
 
 // const columnService = new ColumnService(
 //     new Column().getInstance()
 // );
 
-class ColumnController {
+class CardController {
 
     constructor() {
 
@@ -28,4 +28,4 @@ class ColumnController {
     }
 }
 
-export default new ColumnController();
+export default new CardController();
