@@ -1,10 +1,10 @@
 
 import Service from "./Service";
 
-class ColumnService extends Service {
+class CardService extends Service {
     constructor() {
         super();
     }
 }
 
-export default ColumnService;
+export default CardService;

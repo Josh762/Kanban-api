@@ -1,3 +1,5 @@
+
+
 class Controller {
 
     constructor(service) {
@@ -14,17 +16,26 @@ class Controller {
     }
 
     async getByKey(req, res) {
-        const { id } = req.params;
+        // Changing this function to behave differently if a query param is passed
+        // IF no query param is present, find a single object by it's Object Id
+        // ELSE a query param was passed, use it as the key to the value that was passed
+        // ex: /api/board/123?key=boardId
+
+        const { value } = req.params;
         // let response = await this.service.getByKey(id);
 
-        return res.status(200).send(await this.service.getByKey(id));
+        if (req.query.key) {
+            return res.status(200).send(await this.service.getByKey(value));
+        } else {
+
+            return res.status(200).send(await this.service.getByPrimaryKey(value));
+        }
+
     }
 
     async insert(req, res) {
-        console.log("hmmmm**",req);
 
         let response = await this.service.insert(req.body);
-        console.log("*****",response);
         if (response.error) return res.status(response.statusCode).send(response);
         return res.status(201).send(response);
     }

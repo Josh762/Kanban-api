@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
 
+
+// TODO all of this functionality has been moved to dataService, probably don't need this base class anymore
 class Service {
-    constructor(model) {
-        this.model = model;
+    constructor() {
+        this.model = {};
         this.getAll = this.getAll.bind(this);
+        this.getByPrimaryKey = this.getByPrimaryKey.bind(this);
         this.getByKey = this.getByKey.bind(this);
         this.insert = this.insert.bind(this);
         this.update = this.update.bind(this);
@@ -11,45 +14,69 @@ class Service {
     }
 
     async getAll(query) {
-        let { skip, limit } = query;
 
-        skip = skip ? Number(skip) : 0;
-        limit = limit ? Number(limit) : 10;
 
-        delete query.skip;
-        delete query.limit;
 
-        if (query._id) {
-            try {
-                query._id = new mongoose.mongo.ObjectId(query._id);
-            } catch (error) {
-                console.log("not able to generate mongoose id with content", query._id);
-            }
-        }
+        // let { skip, limit } = query;
+        //
+        // skip = skip ? Number(skip) : 0;
+        // limit = limit ? Number(limit) : 10;
+        //
+        // delete query.skip;
+        // delete query.limit;
+        //
+        // if (query._id) {
+        //     try {
+        //         query._id = new mongoose.mongo.ObjectId(query._id);
+        //     } catch (error) {
+        //         console.log("not able to generate mongoose id with content", query._id);
+        //     }
+        // }
+        //
+        // try {
+        //     let items = await this.model
+        //         .find(query)
+        //         .skip(skip)
+        //         .limit(limit);
+        //     let total = await this.model.count();
+        //
+        //     return {
+        //         error: false,
+        //         statusCode: 200,
+        //         data: items,
+        //         total
+        //     };
+        // } catch (errors) {
+        //     return {
+        //         error: true,
+        //         statusCode: 500,
+        //         errors
+        //     };
+        // }
+    }
 
+    async getByPrimaryKey(id) {
         try {
-            let items = await this.model
-                .find(query)
-                .skip(skip)
-                .limit(limit);
-            let total = await this.model.count();
-
+            let object_id = new mongoose.mongo.ObjectId(id);
+            let item = await this.model.findById(object_id);
             return {
                 error: false,
                 statusCode: 200,
-                data: items,
-                total
+                item
             };
-        } catch (errors) {
+        }
+        catch(error) {
+            console.log("error", error);
             return {
                 error: true,
                 statusCode: 500,
-                errors
+                message: error.errmsg || "Not able to get with id: " + id,
+                errors: error.errors
             };
         }
     }
 
-    async getByKey(id) {
+    async getByKey(key, value) {
         // let { id } = query;
         try {
             let object_id = new mongoose.mongo.ObjectId(id);
@@ -69,7 +96,6 @@ class Service {
                 errors: error.errors
             };
         }
-
     }
 
     async insert(data) {

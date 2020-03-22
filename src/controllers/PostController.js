@@ -2,7 +2,7 @@
 
 import Controller from  './Controller';
 import PostService from  "./../services/PostService";
-import Post from  "./../models/Post";
+import Post from "../models/dataModels/Post";
 const postService = new PostService(
     new Post().getInstance()
 );

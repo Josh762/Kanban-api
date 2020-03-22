@@ -1,9 +1,8 @@
 
 import mongoose, { Schema } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
-import slugify from "./Post";
 
-class Column {
+class Board {
 
     initSchema() {
         const schema = new Schema({
@@ -14,11 +13,6 @@ class Column {
             description: {
                 type: String,
                 required: false,
-            },
-            boardId: {
-                type: [String],
-                required: true,
-                default: []
             }
         }, { timestamps: true });
         schema.pre(
@@ -35,12 +29,12 @@ class Column {
             }
         );
         schema.plugin(uniqueValidator);
-        mongoose.model("columns", schema);
+        mongoose.model("boards", schema);
     }
     getInstance() {
         this.initSchema();
-        return mongoose.model("columns");
+        return mongoose.model("boards");
     }
 }
 
-export default Column
+export default Board
