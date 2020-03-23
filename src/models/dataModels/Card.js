@@ -4,6 +4,17 @@ import uniqueValidator from "mongoose-unique-validator";
 
 class Card {
 
+
+    constructor() {
+        if (!!Card.instance) {
+            this.getInstance();
+        }
+
+        Card.instance = this;
+
+        return this;
+    }
+
     initSchema() {
         const schema = new Schema({
             title: {
@@ -27,6 +38,7 @@ class Card {
         schema.plugin(uniqueValidator);
         mongoose.model("cards", schema);
     }
+
     getInstance() {
         this.initSchema();
         return mongoose.model("cards");

@@ -81,25 +81,21 @@ class DataService {
 
     async _getByKeyValue(key, value) {
         try {
-            // let object_id = new mongoose.mongo.ObjectId(id);
             let query = {};
             query[key] = value;
 
             let data = await this.model.find(query);
-            return {
-                error: false,
-                statusCode: 200,
-                data
-            };
+            return data;
         }
         catch(error) {
             console.log("error", error);
-            return {
-                error: true,
-                statusCode: 500,
-                message: error.errmsg || "Not able to get with key: " + key + ", value: " + value,
-                errors: error.errors
-            };
+            return error;
+            // return {
+            //     error: true,
+            //     statusCode: 500,
+            //     message: error.errmsg || "Not able to get with key: " + key + ", value: " + value,
+            //     errors: error.errors
+            // };
         }
     }
 

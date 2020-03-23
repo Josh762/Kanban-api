@@ -9,6 +9,7 @@ class BoardFacade {
         // this.wrap(board, columns, cards);
     }
 
+    // TODO make this a static function
     wrap(boardInfo, columns, cards) {
         let board = {};
         board.title = boardInfo.title;

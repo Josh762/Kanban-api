@@ -1,0 +1,4 @@
+GET http://localhost:5000/api/column/5e7276c97d3c82114dae70c9
+Accept: application/json
+
+###

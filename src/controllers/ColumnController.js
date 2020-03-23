@@ -1,31 +1,15 @@
 
-import Controller from './Controller';
+import _BaseController from './_BaseController';
 import ColumnService from "./../services/ColumnService";
-import Column from '../models/dataModels/Column';
 
-// const columnService = new ColumnService(
-//     new Column().getInstance()
-// );
+const columnService = new ColumnService();
 
-class ColumnController {
+class ColumnController extends _BaseController {
 
-    constructor() {
-
+    constructor(service) {
+        super(service);
     }
 
-    async insert(req, res) {
-        // should require a board id on the body
-        return res.status(500).send("INSERT NOT YET IMPLEMENTED")
-    }
-    async delete(req, res) {
-        return res.status(500).send("DELETE NOT YET IMPLEMENTED")
-    }
-    async update(req, res) {
-        return res.status(500).send("UPDATE NOT YET IMPLEMENTED")
-    }
-    async getByKey(req, res) {
-        return res.status(500).send("GET NOT YET IMPLEMENTED")
-    }
 }
 
-export default new ColumnController();
+export default new ColumnController(columnService);

@@ -3,41 +3,32 @@
 
 class SuccessFacade {
 
-    constructor(data) {
-
+    constructor() {
+        this.wrap = this.wrap.bind(this);
     }
 
-    wrap(data) {
-        // return new BoardFacade(Board, Columns, Cards);
-        /*
-        * {
-        *   title: "...",
-        *   description: "...",
-        *   columns: {
-        *       position: {
-        *           title: "...",
-        *           description: "...",
-        *           cards: {
-        *               position: {
-        *                   title: "...",
-        *                   content: "..."
-        *               },
-        *               position: {},
-        *               position: {}
-        *           }
-        *       },
-        *       columnId: {...},
-        *       columnId: {...}
-        *   }
-        * }
-        *
-        * */
-        // Board.columns = Columns;
-        //
-        // for(const col in Board.columns) {
-        //
-        // }
+    // TODO make this static
+    wrap(isSuccess, data) {
+        return isSuccess ? this.#success(data) : this.#error(data);
+    }
 
+    #success(data) {
+        return {
+            status: 200,
+            error: false,
+            data: data
+        }
+    }
+
+    #error(error) {
+        return {
+            status: 500,
+            error: true,
+            message: error.errmsg || "",
+            errors: error.errors
+        }
     }
 
 }
+
+export default SuccessFacade;
