@@ -18,7 +18,6 @@ class BoardService {
     #successFacade = new SuccessFacade();
 
     constructor() {
-        console.log('constructor');
         this.getById = this.getById.bind(this);
     }
 

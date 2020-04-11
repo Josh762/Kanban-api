@@ -85,7 +85,11 @@ class DataService {
             query[key] = value;
 
             let data = await this.model.find(query);
-            return data;
+            return {
+                error: false,
+                statusCode: 200,
+                data
+            };
         }
         catch(error) {
             console.log("error", error);
