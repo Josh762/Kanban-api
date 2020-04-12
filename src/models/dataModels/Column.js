@@ -19,9 +19,8 @@ class Column {
                 required: true
             },
             boardId: {
-                type: [String],
-                required: true,
-                default: []
+                type: String,
+                required: true
             }
         }, { timestamps: true });
         schema.plugin(uniqueValidator);
