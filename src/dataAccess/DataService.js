@@ -103,6 +103,10 @@ class DataService {
         }
     }
 
+    async insert(data) {
+        let item = await this.model.create(data);
+    }
+
     // async getByPrimaryKey(id) {
     //     // let { id } = query;
     //     console.log('GET BY PRIMARY KEY', id);
@@ -148,9 +152,6 @@ class DataService {
     //     }
     // }
     //
-    // async insert(data) {
-    //     let item = await this.model.create(data);
-    // }
     //
     // async update(id, data) {
     //     return await this.model.findByIdAndUpdate(id, data, { new: true });

@@ -1,22 +1,25 @@
-
 import mongoose, { Schema } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 
-class Board {
+class User {
 
     initSchema() {
         const schema = new Schema({
-            title: {
-                type: String,
-                required: true,
-            },
-            description: {
+            firstName: {
                 type: String,
                 required: false,
             },
-            userID: {
+            lastName: {
                 type: String,
-                required: true
+                required: false
+            },
+            username: {
+                type: String,
+                required: true,
+            },
+            password: {
+                type: String,
+                required: false,
             }
         }, { timestamps: true });
         schema.pre(
@@ -33,12 +36,12 @@ class Board {
             }
         );
         schema.plugin(uniqueValidator);
-        mongoose.model("boards", schema);
+        mongoose.model("users", schema);
     }
     getInstance() {
         this.initSchema();
-        return mongoose.model("boards");
+        return mongoose.model("users");
     }
 }
 
-export default Board
+export default User

@@ -1,8 +1,12 @@
+import AuthController from './../src/controllers/AuthController';
 import BoardController from './../src/controllers/BoardController';
 import ColumnController from './../src/controllers/ColumnController';
 import CardController from './../src/controllers/CardController';
+import UserController from './../src/controllers/UserController';
 
 export default (server) => {
+
+    // AUTH ROUTES
 
     // BOARD ROUTES
     server.get(`/api/board/:id`, BoardController.getByPrimaryKey);
@@ -21,5 +25,12 @@ export default (server) => {
     server.get(`/api/card/:id`, CardController.getByPrimaryKey);
     server.put(`/api/card/:id`, CardController.update);
     server.delete(`/api/card/:id`, CardController.delete);
+
+    // USER ROUTES // TODO implement these
+    server.post(`/api/user`, UserController.insert);
+    server.get(`/api/user/:id`, UserController.getByPrimaryKey);
+    server.put(`/api/user/:id`, UserController.update);
+    server.delete(`/api/user/:id`, UserController.delete);
+    server.post('/api/login', UserController.login);
 
 }
