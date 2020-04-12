@@ -1,4 +1,4 @@
-import DataService from '../dataAccess/DataService';
+import DataService from './dataAccess/DataService';
 import {User} from "../models/dataModels/dataModelsRegistry";
 import _BaseService from "./_BaseService";
 const jwt = require('jsonwebtoken');

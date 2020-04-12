@@ -1,4 +1,20 @@
+POST http://localhost:5000/api/column
+Content-Type: application/json
+
+{
+  "title": "Test column 1",
+  "description": "Testing columns",
+  "position": 0,
+  "boardId": "5e9382650e9b81b4a421869b"
+}
+
+###
 GET http://localhost:5000/api/column/5e7276c97d3c82114dae70c9
+Accept: application/json
+
+###
+
+GET http://localhost:5000/api/column/user/5e925566c84df16e61326794
 Accept: application/json
 
 ###

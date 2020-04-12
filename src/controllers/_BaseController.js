@@ -6,6 +6,7 @@ class _BaseController {
         this.service = service;
         // this.getAll = this.getAll.bind(this);
         this.getByPrimaryKey = this.getByPrimaryKey.bind(this);
+        this.getByKeyValue = this.getByKeyValue.bind(this);
         this.insert = this.insert.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
@@ -18,6 +19,11 @@ class _BaseController {
     async getByPrimaryKey(req, res) {
         const { id } = req.params;
         return res.status(200).send(await this.service.getById(id));
+    }
+
+    async getByKeyValue(req, res) {
+        const { key, value } = req.params;
+        return res.status(200).send(await this.service.getByKeyValue(key, value));
     }
 
     async insert(req, res) {

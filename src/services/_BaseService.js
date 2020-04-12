@@ -1,9 +1,8 @@
-import DataService from "../dataAccess/DataService";
+import DataService from "./dataAccess/DataService";
 
 class _BaseService {
 
     constructor(model) {
-        this.model = model;
         this.BaseDataService = new DataService(model);
     }
 
@@ -13,6 +12,10 @@ class _BaseService {
 
     async getById(id) {
         return await this.BaseDataService._getByPrimaryKey(id);
+    }
+
+    async getByKeyValue(key, value) {
+        return await this.BaseDataService._getByKeyValue(key, value);
     }
 }
 

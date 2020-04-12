@@ -14,25 +14,25 @@ class Board {
                 type: String,
                 required: false,
             },
-            userID: {
+            userId: {
                 type: String,
                 required: true
             }
         }, { timestamps: true });
-        schema.pre(
-            "save",
-            function(next) {
-                let post = this;
-                if (!post.isModified("title")) {
-                    return next();
-                }
-                return next();
-            },
-            function(err) {
-                next(err);
-            }
-        );
-        schema.plugin(uniqueValidator);
+        // schema.pre(
+        //     "save",
+        //     function(next) {
+        //         let post = this;
+        //         if (!post.isModified("title")) {
+        //             return next();
+        //         }
+        //         return next();
+        //     },
+        //     function(err) {
+        //         next(err);
+        //     }
+        // );
+        // schema.plugin(uniqueValidator);
         mongoose.model("boards", schema);
     }
     getInstance() {

@@ -4,17 +4,6 @@ import uniqueValidator from "mongoose-unique-validator";
 
 class Card {
 
-
-    constructor() {
-        if (!!Card.instance) {
-            this.getInstance();
-        }
-
-        Card.instance = this;
-
-        return this;
-    }
-
     initSchema() {
         const schema = new Schema({
             title: {

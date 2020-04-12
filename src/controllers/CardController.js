@@ -3,6 +3,8 @@ import _BaseController from './_BaseController';
 import ColumnService from "./../services/CardService";
 import Column from '../models/dataModels/Card';
 import CardService from "../services/CardService";
+import BoardService from "../services/BoardService";
+const cardService = new CardService();
 
 // const columnService = new ColumnService(
 //     new Column().getInstance()
@@ -29,4 +31,4 @@ class CardController extends _BaseController {
     // }
 }
 
-export default new CardController(CardService);
+export default new CardController(cardService);

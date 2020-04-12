@@ -1,15 +1,14 @@
+import DataService from './dataAccess/DataService';
+import {Board, Card, Column} from '../models/dataModels/dataModelsRegistry';
 
-import DataService from '../dataAccess/DataService';
+import SuccessFacade from '../models/facades/SuccessFacade';
+import BoardFacade from '../models/facades/BoardFacade';
+import _BaseService from "./_BaseService";
 // import BoardModel from '../models/dataModels/Board';
 // import ColumnModel from '../models/dataModels/Column';
 // import CardModel from '../models/dataModels/Card';
 
-import {Board, Column, Card} from '../models/dataModels/dataModelsRegistry';
-
-import SuccessFacade from '../models/facades/SuccessFacade';
-import BoardFacade from '../models/facades/BoardFacade';
-
-class BoardService {
+class BoardService extends _BaseService {
 
     BoardDataService = new DataService(Board);
     ColumnDataService = new DataService(Column);
@@ -18,7 +17,9 @@ class BoardService {
     #successFacade = new SuccessFacade();
 
     constructor() {
+        super(Board);
         this.getById = this.getById.bind(this);
+
     }
 
     async getById(id) {
@@ -26,18 +27,32 @@ class BoardService {
     }
 
     async #getBoard(id) {
+        return await this.BoardDataService._getByPrimaryKey(id);
+
+    }
+
+    async #getBoardDetails(id) {
         try {
             let board = await this.BoardDataService._getByPrimaryKey(id);
             let columns = await this.ColumnDataService._getByKeyValue('boardId', id);
-            let cards = {};
 
-            for (const column of columns.data) {
+            console.log('board', board.data);
+            console.log('columns', columns.data);
+
+            let cards = {};
+            let data = board.data;
+            data.columns = columns.data;
+            for (const column of data.columns) {
                 const colId = column._id;
                 let card = await this.CardDataService._getByKeyValue('columnId', colId);
-                cards[column.id] = card.data;
+                column.cards = card.data;
+
             }
 
-            const data = this.boardFacade.wrap(board.data, columns.data, cards);
+            console.log(data);
+
+
+            // const data = this.boardFacade.wrap(board.data, columns.data, cards);
             return this.#successFacade.wrap(true, data);
         } catch(error) {
             console.log('ERR', error);

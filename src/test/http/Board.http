@@ -2,8 +2,9 @@ POST http://localhost:5000/api/board
 Content-Type: application/json
 
 {
-  "title": "post 12",
-  "description": "subtitle post 12"
+  "title": "Testing Board",
+  "description": "THIS BOARD IS FOR TESTING PURPOSES",
+  "userId": "5e925566c84df16e61326794"
 }
 
 ###
@@ -13,7 +14,12 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:5000/api/board/5e7276c97d3c82114dae70c9
+GET http://localhost:5000/api/board/5e9382650e9b81b4a421869b
+Content-Type: application/json
+
+###
+
+GET http://localhost:5000/api/board/user/5e925566c84df16e61326794
 Content-Type: application/json
 
 ###
@@ -21,4 +27,5 @@ GET http://localhost:5000/api/board/5e7276c97d3c82114dae70c9?key=boardId
 Content-Type: application/json
 
 ###
+
 
