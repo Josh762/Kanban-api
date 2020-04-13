@@ -100,8 +100,32 @@ class DataService {
         }
     }
 
-    insert(data) {
-        return this.model.create(data);
+    async _getOneByKeyValue(key, value) {
+        try {
+            let query = {};
+            query[key] = value;
+
+            let data = await this.model.findOne(query);
+            return {
+                error: false,
+                statusCode: 200,
+                data
+            };
+        }
+        catch(error) {
+            console.log("error", error);
+            return error;
+            // return {
+            //     error: true,
+            //     statusCode: 500,
+            //     message: error.errmsg || "Not able to get with key: " + key + ", value: " + value,
+            //     errors: error.errors
+            // };
+        }
+    }
+
+    async insert(data) {
+        let item = await this.model.create(data);
     }
 
     // async getByPrimaryKey(id) {
