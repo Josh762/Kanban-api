@@ -14,7 +14,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:5000/api/column/user/5e925566c84df16e61326794
+GET http://localhost:5000/api/column/board/5e9382650e9b81b4a421869b
 Accept: application/json
 
 ###

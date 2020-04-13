@@ -79,11 +79,8 @@ class DataService {
         }
     }
 
-    async _getByKeyValue(key, value) {
+    async _getByKeyValue(query) {
         try {
-            let query = {};
-            query[key] = value;
-
             let data = await this.model.find(query);
             return {
                 error: false,

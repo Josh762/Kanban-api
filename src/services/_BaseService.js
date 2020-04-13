@@ -14,8 +14,8 @@ class _BaseService {
         return await this.BaseDataService._getByPrimaryKey(id);
     }
 
-    async getByKeyValue(key, value) {
-        return await this.BaseDataService._getByKeyValue(key, value);
+    async getByKeyValue(query) {
+        return await this.BaseDataService._getByKeyValue(query);
     }
 }
 

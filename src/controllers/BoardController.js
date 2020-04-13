@@ -10,6 +10,11 @@ class BoardController extends _BaseController {
         super(service);
     }
 
+    async getByKeyValue(req, res) {
+        const { id } = req.params;
+        return res.status(200).send(await this.service.getByKeyValue({'userId':id}));
+    }
+
 }
 
 export default new BoardController(boardService);

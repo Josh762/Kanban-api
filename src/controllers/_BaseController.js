@@ -21,9 +21,12 @@ class _BaseController {
         return res.status(200).send(await this.service.getById(id));
     }
 
-    async getByKeyValue(req, res) {
-        const { key, value } = req.params;
-        return res.status(200).send(await this.service.getByKeyValue(key, value));
+    async getByKeyValue(req, res, next) {
+        try {
+            throw new Error("getByKeyValue must be implemented in the extending controller.");
+        } catch(err) {
+            next(err);
+        }
     }
 
     async insert(req, res) {

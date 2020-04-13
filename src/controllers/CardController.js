@@ -16,6 +16,11 @@ class CardController extends _BaseController {
         super(service);
     }
 
+    async getByKeyValue(req, res) {
+        const { id } = req.params;
+        return res.status(200).send(await this.service.getByKeyValue({'columnId': id}));
+    }
+
     // async insert(req, res) {
     //     // should require a board id on the body
     //     return res.status(500).send("INSERT NOT YET IMPLEMENTED")
