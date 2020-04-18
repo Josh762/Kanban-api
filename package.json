@@ -5,6 +5,10 @@
   "repository": "https://github.com/Josh762/Kanban-Board.git",
   "author": "Josh762 <joshbrewster762@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "12.16.x",
+    "yarn": "1.x"
+  },
   "scripts": {
     "test": "jest",
     "start": "babel-node index.js",
