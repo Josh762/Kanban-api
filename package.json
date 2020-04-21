@@ -5,17 +5,16 @@
   "repository": "https://github.com/Josh762/Kanban-Board.git",
   "author": "Josh762 <joshbrewster762@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "13.9.x",
+    "yarn": "1.x"
+  },
   "scripts": {
     "test": "jest",
     "start": "babel-node index.js",
     "dev:start": "nodemon --exec babel-node index.js"
   },
   "dependencies": {
-    "@babel/core": "^7.8.7",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-proposal-private-methods": "^7.8.3",
-    "@babel/preset-env": "^7.8.7",
-    "@babel/register": "^7.8.6",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "cors": "^2.8.5",
@@ -29,8 +28,15 @@
     "slugify": "^1.4.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.0.0-0",
     "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-private-methods": "^7.8.3",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/register": "^7.8.6",
     "babel-loader": "^8.0.6",
+    "babel-node": "^0.0.1-security",
     "jest": "^25.1.0",
     "nodemon": "^2.0.2"
   }
