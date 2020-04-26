@@ -11,7 +11,7 @@ class UserService extends _BaseService{
     }
 
 
-    signup(req, res) {
+    signup(req, res) { // TODO hash passwords because storing them as plain text is dumb
         req.body.username = req.body.username.toLowerCase();
 
         this.UserDataService._getOneByKeyValue("username", req.body.username).then((userData) => {
@@ -42,7 +42,7 @@ class UserService extends _BaseService{
 
             })
         }).catch((err) => {
-            console.log('ERRRRRR', err);
+            console.log('ERROR:', err);
 
             res.json({
                         error: true,
