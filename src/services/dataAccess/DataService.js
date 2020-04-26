@@ -9,7 +9,7 @@ class DataService {
         this.__getByKeyValue = this._getByKeyValue.bind(this);
         // this.getByPrimaryKey = this.getByPrimaryKey.bind(this);
         // this.getByKey = this.getByKey.bind(this);
-        // this.insert = this.insert.bind(this);
+        this._insert = this._insert.bind(this);
         // this.update = this.update.bind(this);
         // this.delete = this.delete.bind(this);
     }
@@ -127,8 +127,8 @@ class DataService {
         // }
     }
 
-    async insert(data) {
-        let item = await this.model.create(data);
+    _insert(data) {
+        this.model.create(data);
     }
 
     // async getByPrimaryKey(id) {

@@ -35,6 +35,7 @@ export default (server) => {
     server.put(`/api/user/:id`, verifyToken, UserController.update);
     server.delete(`/api/user/:id`, verifyToken, UserController.delete);
     server.post('/api/login', UserController.login);
+    server.post('/api/signup', UserController.signup);
 
 }
 

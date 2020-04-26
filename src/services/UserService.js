@@ -10,9 +10,24 @@ class UserService extends _BaseService{
         super(User);
     }
 
-    login(req, res) {
+
+    signup(req, res) {
+        req.body.username = req.body.username.toLowerCase();
 
         this.UserDataService._getOneByKeyValue("username", req.body.username).then((userData) => {
+            // if (userData === null)
+            // else throw new Error('Username is already in use');
+            res.sendStatus(409);
+        }).catch((err) => {
+            this.UserDataService._insert(req.body);
+            res.sendStatus(200)
+        })
+
+    }
+
+    login(req, res) {
+
+        this.UserDataService._getOneByKeyValue("username", req.body.username.toLowerCase()).then((userData) => {
 
             if (req.body.password !== userData.data.password) throw new Error('Passwords do not match');
 

@@ -14,6 +14,10 @@ class UserController extends _BaseController {
         await userService.login(req, res);
     }
 
+    async signup (req, res) {
+        await userService.signup(req, res);
+    }
+
 }
 
 export default new UserController(userService);
