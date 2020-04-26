@@ -11,7 +11,7 @@ class UserController extends _BaseController {
     }
 
     async login (req, res) {
-        res.json(await userService.login(req.body));
+        await userService.login(req, res);
     }
 
 }

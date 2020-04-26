@@ -10,15 +10,35 @@ class UserService extends _BaseService{
         super(User);
     }
 
-    async login(reqBody) {
-        const userData = await this.UserDataService._getOneByKeyValue("username", reqBody.username);
+    login(req, res) {
 
-        const user = {
-            username: userData.data.username,
-            password: userData.data.password
-        };
+        this.UserDataService._getOneByKeyValue("username", req.body.username).then((userData) => {
 
-        return await jwt.sign(user, 'secretkey', { expiresIn: '1m' });
+            if (req.body.password !== userData.data.password) throw new Error('Passwords do not match');
+
+            const user = {
+                _id: userData.data._id,
+                username: userData.data.username,
+            };
+
+            res.json( {
+
+                token: jwt.sign(user, 'secretkey', { expiresIn: '60m' })
+
+            })
+        }).catch((err) => {
+            console.log('ERRRRRR', err);
+
+            // return "FUCKFUCKFUCK";
+
+            res.json({
+                        error: true,
+                        statusCode: 401,
+                        message: err
+                    })
+        })
+
+
     }
 }
 

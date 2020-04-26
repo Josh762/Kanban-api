@@ -101,27 +101,30 @@ class DataService {
     }
 
     async _getOneByKeyValue(key, value) {
-        try {
+        // try {
             let query = {};
             query[key] = value;
 
             let data = await this.model.findOne(query);
+            if (data === null) throw new Error("Not able to get with key: " + key + ", value: " + value);
+
+
             return {
                 error: false,
                 statusCode: 200,
                 data
             };
-        }
-        catch(error) {
-            console.log("error", error);
-            return error;
-            // return {
-            //     error: true,
-            //     statusCode: 500,
-            //     message: error.errmsg || "Not able to get with key: " + key + ", value: " + value,
+        // }
+        // catch(error) {
+        //     console.log("error", error);
+        //     return error;
+        //     // return {
+        //     //     error: true,
+        //     //     statusCode: 500,
+        //     //     message: error.errmsg || "Not able to get with key: " + key + ", value: " + value,
             //     errors: error.errors
             // };
-        }
+        // }
     }
 
     async insert(data) {

@@ -27,6 +27,7 @@ class BoardService extends _BaseService {
     }
 
     async #getBoard(id) {
+        console.log('here');
         return await this.BoardDataService._getByPrimaryKey(id);
 
     }
