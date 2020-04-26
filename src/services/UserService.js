@@ -29,8 +29,6 @@ class UserService extends _BaseService{
         }).catch((err) => {
             console.log('ERRRRRR', err);
 
-            // return "FUCKFUCKFUCK";
-
             res.json({
                         error: true,
                         statusCode: 401,
