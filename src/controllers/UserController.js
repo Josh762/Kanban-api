@@ -10,8 +10,12 @@ class UserController extends _BaseController {
         this.login = this.login.bind(this);
     }
 
-    async login (req, res) {
-        await userService.login(req, res);
+    login (req, res, next) {
+        try {
+            userService.login(req, res, next).then((resp) => {res.json(resp)}).catch((err) => { next(err)})
+        } catch (e) {
+            next(e)
+        }
     }
 
     async signup (req, res) {

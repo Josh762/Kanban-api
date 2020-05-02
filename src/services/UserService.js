@@ -34,21 +34,23 @@ class UserService extends _BaseService{
             const user = {
                 _id: userData.data._id,
                 username: userData.data.username,
+                firstName: userData.data.firstName,
+                LastName: userData.data.LastName,
+
             };
 
             res.json( {
-
-                token: jwt.sign(user, 'secretkey', { expiresIn: '60m' })
-
+                token: jwt.sign(user, 'secretkey', { expiresIn: '60m' }),
+                user
             })
         }).catch((err) => {
             console.log('ERROR:', err);
-
-            res.json({
-                        error: true,
-                        statusCode: 401,
-                        message: err
-                    })
+            return(err);
+            // res.json({
+            //             error: true,
+            //             statusCode: 401,
+            //             message: err
+            //         })
         })
 
 
