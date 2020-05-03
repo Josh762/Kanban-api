@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.7",
+    "babel-node": "^0.0.1-security",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "cors": "^2.8.5",
@@ -38,7 +39,6 @@
     "@babel/preset-es2015": "^7.0.0-beta.53",
     "@babel/register": "^7.8.6",
     "babel-loader": "^8.0.6",
-    "babel-node": "^0.0.1-security",
     "jest": "^25.1.0",
     "nodemon": "^2.0.2"
   }
