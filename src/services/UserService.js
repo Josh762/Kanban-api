@@ -11,47 +11,75 @@ class UserService extends _BaseService{
     }
 
 
-    signup(req, res) { // TODO hash passwords because storing them as plain text is dumb
-        req.body.username = req.body.username.toLowerCase();
+    async signup(username, password) { // TODO hash passwords because storing them as plain text is dumb
+        username = username.toLowerCase();
 
-        this.UserDataService._getOneByKeyValue("username", req.body.username).then((userData) => {
-            // if (userData === null)
-            // else throw new Error('Username is already in use');
-            res.sendStatus(409);
-        }).catch((err) => {
-            this.UserDataService._insert(req.body);
-            res.sendStatus(200)
-        })
+        try {
+            const userExists = await User.exists({username})
+            if (userExists === false) {
+                return await this.UserDataService._insert({username, password});
+            }
+            else {
+                throw new Error('409');
+            }
+        } catch (e) {
+            throw new Error(e.message)
+        }
+
+
 
     }
 
-    login(req, res) {
-
-        this.UserDataService._getOneByKeyValue("username", req.body.username.toLowerCase()).then((userData) => {
-
-            if (req.body.password !== userData.data.password) throw new Error('Passwords do not match');
-
+    async login(username, password) {
+        try {
+            const userData = await this.UserDataService._getOneByKeyValue("username", username.toLowerCase());
             const user = {
-                _id: userData.data._id,
-                username: userData.data.username,
-                firstName: userData.data.firstName,
-                LastName: userData.data.LastName,
-
+                _id: userData._id,
+                username: userData.username,
             };
+            if (password !== userData.password) {
+                throw new Error('401');
+            }
 
-            res.json( {
-                token: jwt.sign(user, 'secretkey', { expiresIn: '60m' }),
-                user
-            })
-        }).catch((err) => {
-            console.log('ERROR:', err);
-            return(err);
-            // res.json({
-            //             error: true,
-            //             statusCode: 401,
-            //             message: err
-            //         })
-        })
+
+            const token = await jwt.sign(user, 'secretkey', {expiresIn: '60m'});
+
+            return {
+                user,
+                token
+            }
+        } catch (e) {
+            throw new Error(e.message);
+        }
+
+
+
+        // this.UserDataService._getOneByKeyValue("username", req.body.username.toLowerCase()).then((userData) => {
+        //
+        //     if (req.body.password !== userData.data.password) throw new Error('Passwords do not match');
+        //
+        //     const user = {
+        //         _id: userData.data._id,
+        //         username: userData.data.username,
+        //         firstName: userData.data.firstName,
+        //         LastName: userData.data.LastName,
+        //
+        //     };
+        //
+        //     res.json( {
+        //         token: jwt.sign(user, 'secretkey', { expiresIn: '60m' }),
+        //         user
+        //     })
+        // }).catch((err) => {
+        //     throw new Error(err.message)
+        //     // console.log('ERROR:', err);
+        //     // return(err);
+        //     // // res.json({
+        //     // //             error: true,
+        //     // //             statusCode: 401,
+        //     // //             message: err
+        //     // //         })
+        // })
 
 
     }
