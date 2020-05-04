@@ -29,11 +29,16 @@ class _BaseController {
         }
     }
 
-    async insert(req, res) {
+    async insert(req, res, next) {
+        try {
+            let response = await this.service.insert(req.body);
+            res.status(201).send(response);
+            next();
+        } catch(e) {
 
-        let response = await this.service.insert(req.body);
+            next(e);
+        }
         // if (response.error) return res.status(response.statusCode).send(response); TODO error handling
-        return res.status(201).send(response);
     }
 
     async update(req, res) {

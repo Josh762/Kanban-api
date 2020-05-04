@@ -6,7 +6,7 @@
   "author": "Josh762 <joshbrewster762@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": "13.9.x",
+    "node": "13.5.0",
     "npm": "6.13.4"
   },
   "scripts": {
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.7",
-    "babel-node": "^0.0.1-security",
+    "babel-node": "0.0.1-security",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "cors": "^2.8.5",

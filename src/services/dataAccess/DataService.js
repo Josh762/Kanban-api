@@ -130,7 +130,7 @@ class DataService {
     }
 
     async _insert(data) {
-        await this.model.create(data);
+        return this.model.create(data);
     }
 
     // async getByPrimaryKey(id) {

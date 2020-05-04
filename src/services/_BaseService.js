@@ -7,7 +7,7 @@ class _BaseService {
     }
 
     async insert(obj) {
-        return await this.BaseDataService.insert(obj);
+        return await this.BaseDataService._insert(obj);
     }
 
     async getById(id) {

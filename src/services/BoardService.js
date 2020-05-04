@@ -19,17 +19,25 @@ class BoardService extends _BaseService {
     constructor() {
         super(Board);
         this.getById = this.getById.bind(this);
-
+        this.insert = this.insert.bind(this);
     }
 
     async getById(id) {
         return await this.#getBoard(id);
     }
 
+    async insert(data) {
+        let board = await this.BaseDataService._insert(data);
+        await this.ColumnDataService._insert({title: 'Backlog', description: '', boardId: board._id});
+        await this.ColumnDataService._insert({title: 'To Do', description: '', boardId: board._id});
+        await this.ColumnDataService._insert({title: 'In Progress', description: '', boardId: board._id});
+        await this.ColumnDataService._insert({title: 'Done', description: '', boardId: board._id});
+
+    }
+
     async #getBoard(id) {
         console.log('here');
         return await this.BoardDataService._getByPrimaryKey(id);
-
     }
 
     async #getBoardDetails(id) {

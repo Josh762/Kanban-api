@@ -14,10 +14,10 @@ class Column {
                 type: String,
                 required: false,
             },
-            position: {
-                type: Number,
-                required: true
-            },
+            // position: {
+            //     type: Number,
+            //     required: true
+            // },
             boardId: {
                 type: String,
                 required: true
