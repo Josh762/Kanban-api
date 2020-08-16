@@ -1,8 +1,8 @@
-import AuthController from './../src/controllers/AuthController';
-import BoardController from './../src/controllers/BoardController';
-import ColumnController from './../src/controllers/ColumnController';
-import CardController from './../src/controllers/CardController';
-import UserController from './../src/controllers/UserController';
+import AuthController from '../controllers/AuthController';
+import BoardController from '../controllers/BoardController';
+import ColumnController from '../controllers/ColumnController';
+import CardController from '../controllers/CardController';
+import UserController from '../controllers/UserController';
 
 export default (server) => {
 
