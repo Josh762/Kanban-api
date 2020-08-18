@@ -4,9 +4,9 @@ import {Board, Card, Column} from '../models/dataModels/dataModelsRegistry';
 import SuccessFacade from '../models/facades/SuccessFacade';
 import BoardFacade from '../models/facades/BoardFacade';
 import _BaseService from "./_BaseService";
-// import BoardModel from '../models/dataModels/Board';
-// import ColumnModel from '../models/dataModels/Column';
-// import CardModel from '../models/dataModels/Card';
+// import BoardModel from '../data-transfer-objects/dataModels/Board';
+// import ColumnModel from '../data-transfer-objects/dataModels/Column';
+// import CardModel from '../data-transfer-objects/dataModels/Card';
 
 class BoardService extends _BaseService {
 

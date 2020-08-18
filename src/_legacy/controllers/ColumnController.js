@@ -1,6 +1,6 @@
 
 import _BaseController from './_BaseController';
-import ColumnService from "./../services/ColumnService";
+import ColumnService from "../services/ColumnService";
 
 const columnService = new ColumnService();
 

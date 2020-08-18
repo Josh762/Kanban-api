@@ -1,6 +1,6 @@
 
 import _BaseController from './_BaseController';
-import ColumnService from "./../services/CardService";
+import ColumnService from "../services/CardService";
 import Column from '../models/dataModels/Card';
 import CardService from "../services/CardService";
 import BoardService from "../services/BoardService";

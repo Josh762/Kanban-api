@@ -1,5 +1,5 @@
 import _BaseController from './_BaseController';
-import UserService from "./../services/UserService";
+import UserService from "../services/UserService";
 
 const userService = new UserService();
 

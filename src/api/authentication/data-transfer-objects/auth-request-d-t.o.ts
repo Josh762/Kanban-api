@@ -1,7 +1,7 @@
 
 import { IsString } from "class-validator";
 
-class AuthRequestDto {
+class AuthRequestDTO {
     @IsString()
     public username!: string;
 
@@ -10,4 +10,4 @@ class AuthRequestDto {
 
 }
 
-export default AuthRequestDto;
+export default AuthRequestDTO;

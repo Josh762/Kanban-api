@@ -1,6 +1,6 @@
 
 import _BaseController from './_BaseController';
-import BoardService from "./../services/BoardService";
+import BoardService from "../services/BoardService";
 
 const boardService = new BoardService();
 

@@ -1,5 +1,5 @@
 import DataService from './dataAccess/DataService';
-// import ColumnModel from '../models/dataModels/Column';
+// import ColumnModel from '../data-transfer-objects/dataModels/Column';
 
 
 import {Column} from '../models/dataModels/dataModelsRegistry';

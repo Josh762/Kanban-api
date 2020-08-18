@@ -1,4 +1,4 @@
-import User from "./user.interface";
+import User from "../interfaces/user.interface";
 import { IsString } from "class-validator";
 
 class CreateUserDTO {

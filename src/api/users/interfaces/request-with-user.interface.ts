@@ -1,4 +1,4 @@
-import User from "../users/user.interface";
+import User from "./user.interface";
 
 
 interface RequestWithUser extends Request {

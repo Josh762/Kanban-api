@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import App from "./app";
-import AuthenticationController from "./authentication/authentication.controller";
+import AuthenticationController from "./api/authentication/authentication.controller";
 import validateEnv from './utils/validateEnv';
 import middleware from "./middleware";
 validateEnv();
