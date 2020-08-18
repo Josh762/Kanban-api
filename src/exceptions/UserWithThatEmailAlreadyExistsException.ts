@@ -1,7 +1,7 @@
 import BaseHttpException from "./BaseHttpException";
 
 
-class UserWithThatEmailAlreadyExists extends BaseHttpException {
+class UserWithThatEmailAlreadyExistsException extends BaseHttpException {
 
     constructor(email:string) {
         const status = 409;
@@ -21,4 +21,4 @@ class UserWithThatEmailAlreadyExists extends BaseHttpException {
 }
 
 
-export default UserWithThatEmailAlreadyExists;
+export default UserWithThatEmailAlreadyExistsException;
