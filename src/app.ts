@@ -1,7 +1,7 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import middleware from "./middleware";
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+
+import errorMiddleware from "./middleware/error.middleware";
 
 class App {
     public app: express.Application;
@@ -16,9 +16,10 @@ class App {
         this.version = version;
 
         this.connectToTheDatabase();
+        this.initializeMiddlewares(middleware);
 
         this.initializeControllers(controllers);
-        this.initializeMiddlewares(middleware);
+        this.initializeErrorHandling();
     }
 
     public listen() {
@@ -28,9 +29,14 @@ class App {
     }
 
     private initializeMiddlewares(middleware:any[]) {
+        // this.app.use(bodyParser.json())
         middleware.forEach((m:any) => {
             this.app.use(m)
         })
+    }
+
+    private initializeErrorHandling() {
+        this.app.use(errorMiddleware);
     }
 
     private initializeControllers(controllers:any) {
