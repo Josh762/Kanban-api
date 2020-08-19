@@ -1,11 +1,7 @@
-import bcrypt from 'bcrypt'
 import express from 'express';
-import WrongCredentialsException from '../../exceptions/WrongCredentialsException';
-import validationMiddleware from "../../middleware/validation.middleware";
+import validateBodyMiddleware from "../../middleware/validate-body.middleware";
 import CreateUserDTO from '../users/data-transfer-objects/create-user.dto';
 import UserResponseDto from "../users/data-transfer-objects/user-response.dto";
-import User from "../users/interfaces/user.interface";
-import userModel from '../users/user.model';
 
 import AuthenticationService from './authentication.service';
 import AuthRequestDTO from "./data-transfer-objects/auth-request-d-t.o";
@@ -15,7 +11,6 @@ import RegistrationResponse from "./interfaces/registration-response.interface";
 class AuthenticationController {
   public path = '/auth';
   public router = express.Router();
-  private user = userModel;
 
   private AuthenticationService = new AuthenticationService();
 
@@ -25,8 +20,8 @@ class AuthenticationController {
   }
 
   public initializeRoutes() {
-    this.router.post(`${this.path}/register`, validationMiddleware(CreateUserDTO), this.registerNewUser);
-    this.router.post(`${this.path}/login`, validationMiddleware(AuthRequestDTO), this.login);
+    this.router.post(`${this.path}/register`, validateBodyMiddleware(CreateUserDTO), this.registerNewUser);
+    this.router.post(`${this.path}/login`, validateBodyMiddleware(AuthRequestDTO), this.login);
     this.router.post(`${this.path}/logout`, this.logOut);
   }
 

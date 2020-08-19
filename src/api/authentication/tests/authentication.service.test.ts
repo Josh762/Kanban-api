@@ -2,6 +2,10 @@ import CreateUserDTO from "../../users/data-transfer-objects/create-user.dto";
 import AuthenticationService from "../authentication.service";
 import UserWithThatEmailAlreadyExistsException from "../../../exceptions/UserWithThatEmailAlreadyExistsException";
 // import typeorm from 'typeorm';
+import {connect, clearDatabase, closeDatabase} from '../../../test-db';
+beforeAll(async () => await connect())
+afterEach(async () => await clearDatabase());
+afterAll(async () => await closeDatabase());
 
 describe('AuthenticationService', () => {
 
@@ -33,8 +37,9 @@ describe('AuthenticationService', () => {
         //   findOne: () => Promise.resolve(userData),
         // });
         const authenticationService = new AuthenticationService();
-        await expect(authenticationService.register(userData))
-          .rejects.toMatchObject(new UserWithThatEmailAlreadyExistsException(userData.email));
+        await expect(async () => await authenticationService.register(userData))
+          .toThrow()
+          // .rejects.toMatchObject(new UserWithThatEmailAlreadyExistsException(userData.email));
       });
     });
   });
