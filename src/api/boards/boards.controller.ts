@@ -1,6 +1,8 @@
 import express from "express";
 
 
+
+
 class BoardsController {
   public path = '/boards';
   public router = express.Router();
@@ -13,15 +15,15 @@ class BoardsController {
     this.router.get(`${this.path}`, this.getAllBoardsForUser)
   }
 
-  private createBoard = async () => {
+  private createBoard = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
     try {
-
-    } catch () {
+      const newBoardData:CreateBoardDTO = request.body;
+    } catch (e) {
 
     }
   }
 
-  private getAllBoardsForUser = async () => {
+  private getAllBoardsForUser = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
 
 
     try {
