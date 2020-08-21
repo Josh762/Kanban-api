@@ -14,7 +14,7 @@ async function authMiddleware(request: RequestWithUser, response: Response, next
             // todo need a better secret
             const verificationResponse = jwt.verify(cookies.Authorization, secret) as DataStoredInToken;
             const id = verificationResponse._id;
-            const user = await userModel.findById(id);
+            const user = await userModel.findById(id); // todo will this get too expensive to request the user every time?
             if (user) {
                 request.user = user;
                 next();
