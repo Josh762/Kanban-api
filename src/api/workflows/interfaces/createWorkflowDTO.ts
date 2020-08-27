@@ -4,7 +4,7 @@ import workflowType from "./workFlowType.enum";
 
 
 class CreateWorkflowDTO {
-  @IsEnum(workflowType)
+  // @IsEnum(workflowType)
   public type!: workflowType;
 }
 

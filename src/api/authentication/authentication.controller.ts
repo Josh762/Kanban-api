@@ -7,11 +7,10 @@ import AuthenticationService from './authentication.service';
 import AuthRequestDTO from "./data-transfer-objects/auth-request-d-t.o";
 import RegistrationResponse from "./interfaces/registration-response.interface";
 
-
+import cors from 'cors'
 class AuthenticationController {
   public path = '/auth';
   public router = express.Router();
-
   private AuthenticationService = new AuthenticationService();
 
 
@@ -21,7 +20,7 @@ class AuthenticationController {
 
   public initializeRoutes() {
     this.router.post(`${this.path}/register`, validateBodyMiddleware(CreateUserDTO), this.registerNewUser);
-    this.router.post(`${this.path}/login`, validateBodyMiddleware(AuthRequestDTO), this.login);
+    this.router.post(`${this.path}/login/`, this.login);
     this.router.post(`${this.path}/logout`, this.logOut);
   }
 
@@ -43,6 +42,9 @@ class AuthenticationController {
     try {
       const logInData: AuthRequestDTO = request.body;
       const loginResponse: RegistrationResponse = await this.AuthenticationService.login(logInData);
+
+      response.header("Access-Control-Allow-Origin","*");
+      response.header("Access-Control-Allow-Credentials","true");
 
       response.setHeader('Set-Cookie', [loginResponse.cookie]);
       response.send(new UserResponseDto(loginResponse.user))

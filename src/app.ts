@@ -1,6 +1,9 @@
 import express from 'express';
+import * as fs from "fs";
 import mongoose from 'mongoose';
-
+import cors from 'cors';
+import https from 'https';
+import corsMiddleware from "./middleware/add-cors-headers.middleware";
 import errorMiddleware from "./middleware/error.middleware";
 
 class App {
@@ -16,14 +19,22 @@ class App {
         this.version = version;
 
         this.connectToTheDatabase();
+        this.initializeCors();
+
         this.initializeMiddlewares(middleware);
 
-        this.initializeControllers(controllers);
         this.initializeErrorHandling();
+
+        this.initializeControllers(controllers);
+
     }
 
     public listen() {
-        this.app.listen(process.env.PORT, () => {
+        https.createServer({
+            key: fs.readFileSync('server.key'),
+            cert: fs.readFileSync('server.cert')
+        }, this.app)
+          .listen(process.env.PORT, () => {
             console.log(`App listening on the port ${process.env.PORT}`);
         });
     }
@@ -37,6 +48,24 @@ class App {
 
     private initializeErrorHandling() {
         this.app.use(errorMiddleware);
+    }
+
+    private initializeCors() {
+        this.app.use(cors());
+        const whitelist = [
+            'https://0.0.0.0:3001', 'https://localhost:3001', 'https://0.0.0.0:7075', 'https://localhost:7075', 'http://localhost:7075'
+        ];
+        const corsOptions = {
+            origin: function(origin:any, callback:any){
+                const originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+                originIsWhitelisted ? callback(null, originIsWhitelisted) : callback(new Error('Not allowed by CORS'))
+            },
+            credentials: true,
+            methods: 'GET,POST'
+        };
+        console.log('hereherehere')
+        this.app.use(cors(corsOptions));
+
     }
 
     private initializeControllers(controllers:any) {
