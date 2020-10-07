@@ -1,8 +1,11 @@
-
 import express from 'express';
+
 import authMiddleware from "../../middleware/auth.middleware";
-import Task from "../../types/interface/tasks/task.interface";
+import validateBodyMiddleware from "../../middleware/validate-body.middleware";
+
 import {Types} from "mongoose";
+import CreateTaskDTO from "../../types/data-transfer-objects/tasks/create-task.dto";
+import TaskDTO from "../../types/data-transfer-objects/tasks/task.dto";
 
 import TasksService from '../services/tasks.service';
 
@@ -12,25 +15,20 @@ class TasksController {
     private service = new TasksService();
 
     constructor() {
-        this.initializeRoutes();
-    }
-
-    initializeRoutes() {
-        this.router.post(`${this.path}`, authMiddleware, this.createTask);
-        this.router.get(`${this.path}/board/:workflowID`, authMiddleware, this.getTaskByWorkflowId);
-        this.router.put(`${this.path}/task/:taskID`, authMiddleware, this.updateTask);
+        this.router
+            .all(`${this.path}*`, authMiddleware)
+            .post(`${this.path}`, validateBodyMiddleware(CreateTaskDTO), this.createTask)
+            .get(`${this.path}/board/:workflowID`, this.getTaskByWorkflowId)
+            .put(`${this.path}/task/:taskID`, validateBodyMiddleware(TaskDTO), this.updateTask);
     }
 
     // todo delete functionality
 
     private createTask = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
         try {
-            // request.params.workflowID
-            const taskResp = await this.service.createTask(request.body);
-            console.log('**', taskResp);
-            response.send(taskResp);
+            response.send(await this.service.createTask(request.body));
         } catch (e) {
-            console.log(e); // todo handle error
+            next(e);
         }
 
     }
@@ -39,7 +37,7 @@ class TasksController {
         try {
             return this.service.getTasks(Types.ObjectId(request.params.workflowID));
         } catch (e) {
-            console.log(e);
+            next(e);
         }
     }
 
@@ -47,7 +45,7 @@ class TasksController {
         try {
             return this.service.updateTask(request.body)
         } catch (e) {
-
+            next(e);
         }
     }
 }
