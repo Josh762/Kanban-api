@@ -1,13 +1,21 @@
-import 'dotenv/config';
-import BoardsController from "./api/boards/boards.controller";
-import WorkflowsController from "./api/workflows/workflows.controller";
 import App from "./app";
-import AuthenticationController from "./api/authentication/authentication.controller";
+import 'dotenv/config';
 import validateEnv from './utils/validateEnv';
 import middleware from "./middleware";
+
+import AuthenticationController from "./api/authentication/authentication.controller"
+import BoardsController from "./api/boards/boards.controller";
+import WorkflowsController from "./api/workflows/workflows.controller";
+import TasksController from './api/tasks/tasks.controller';
+
 validateEnv();
 
-const controllers:any[] = [new AuthenticationController(), new WorkflowsController(), new BoardsController()]
+const controllers:any[] = [
+    new AuthenticationController(),
+    new WorkflowsController(),
+    new BoardsController(),
+    new TasksController()
+]
 
 try {
     const app = new App(controllers, middleware)

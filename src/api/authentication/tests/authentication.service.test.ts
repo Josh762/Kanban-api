@@ -1,4 +1,4 @@
-import CreateUserDTO from "../../users/data-transfer-objects/create-user.dto";
+import CreateUserDTO from "../../users/types/data-transfer-objects/create-user.dto";
 import AuthenticationService from "../authentication.service";
 import UserWithThatEmailAlreadyExistsException from "../../../exceptions/UserWithThatEmailAlreadyExistsException";
 // import typeorm from 'typeorm';

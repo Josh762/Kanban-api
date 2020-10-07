@@ -1,0 +1,10 @@
+POST http://localhost:3001/api/v1/tasks
+Content-Type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNhM2I0NWNmNDMyODM0ZThmYjliOTYiLCJpYXQiOjE2MDE1MjQ5MTcsImV4cCI6MTYwMTUyODUxN30.uzpcuQ6sCOPmIH5ww8bQebot9UUYcadvagOecXUz2J4
+
+{
+  "title": "my first task!",
+  "description": "Task Description!"
+}
+
+###

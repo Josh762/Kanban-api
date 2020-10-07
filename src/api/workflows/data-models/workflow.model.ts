@@ -1,5 +1,5 @@
 import mongoose, {Types} from 'mongoose';
-import Workflow from "./interfaces/workflow.interface";
+import Workflow from "../types/interfaces/workflow.interface";
 
 
 const workflowSchema = new mongoose.Schema({

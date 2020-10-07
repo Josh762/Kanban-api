@@ -1,4 +1,4 @@
-import User from "../../users/interfaces/user.interface";
+import User from "../../users/types/interfaces/user.interface";
 
 interface RegistrationResponse {
   cookie: string;

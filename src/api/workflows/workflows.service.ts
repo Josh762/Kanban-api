@@ -1,12 +1,12 @@
 
 import {Types} from "mongoose";
-import User from "../users/interfaces/user.interface";
-import CreateWorkflowDTO from "./interfaces/createWorkflowDTO";
-import FlowNode from "./interfaces/flowNode.interface";
-import WorkflowDTO from "./interfaces/Workflow.dto";
-import Workflow from "./interfaces/workflow.interface";
-import workflowModel from './workflow.model';
-import flowNodeModel from './flownode.model';
+import User from "../users/types/interfaces/user.interface";
+import CreateWorkflowDTO from "./types/interfaces/createWorkflowDTO";
+import FlowNode from "./types/interfaces/flowNode.interface";
+import WorkflowDTO from "./types/interfaces/Workflow.dto";
+import Workflow from "./types/interfaces/workflow.interface";
+import workflowModel from './data-models/workflow.model';
+import flowNodeModel from './data-models/flownode.model';
 
 class WorkflowsService {
   private workflowModel = workflowModel;

@@ -1,13 +1,16 @@
 import express from 'express';
 import validateBodyMiddleware from "../../middleware/validate-body.middleware";
-import CreateUserDTO from '../users/data-transfer-objects/create-user.dto';
-import UserResponseDto from "../users/data-transfer-objects/user-response.dto";
+import CreateUserDTO from '../users/types/data-transfer-objects/create-user.dto';
+import UserResponseDto from "../users/types/data-transfer-objects/user-response.dto";
 
 import AuthenticationService from './authentication.service';
-import AuthRequestDTO from "./data-transfer-objects/auth-request-d-t.o";
+import AuthRequestDto from "./data-transfer-objects/auth-request.dto";
 import RegistrationResponse from "./interfaces/registration-response.interface";
 
-import cors from 'cors'
+import LoginResponseDTO from "./data-transfer-objects/login-response.dto";
+import LoginResponse from "./interfaces/login-response.interface";
+import User from "../users/types/interfaces/user.interface";
+import UserResponseDTO from "../users/types/data-transfer-objects/user-response.dto";
 class AuthenticationController {
   public path = '/auth';
   public router = express.Router();
@@ -20,7 +23,7 @@ class AuthenticationController {
 
   public initializeRoutes() {
     this.router.post(`${this.path}/register`, validateBodyMiddleware(CreateUserDTO), this.registerNewUser);
-    this.router.post(`${this.path}/login/`, this.login);
+    this.router.post(`${this.path}/login`, this.login);
     this.router.post(`${this.path}/logout`, this.logOut);
   }
 
@@ -28,26 +31,28 @@ class AuthenticationController {
 
     try {
       const userData: CreateUserDTO = request.body;
-      const registerResp: RegistrationResponse = await this.AuthenticationService.register(userData);
+      const user: User = await this.AuthenticationService.register(userData);
+      const tokenData: TokenData = this.AuthenticationService.createToken(user);
 
-      response.setHeader('Set-Cookie', [registerResp.cookie]);
-      response.send(new UserResponseDto(registerResp.user));
+      // response.setHeader('Set-Cookie', [registerResp.cookie]);
+      response.send(new LoginResponseDTO(new UserResponseDTO(user), tokenData.token));
     } catch (e) {
       next(e)
     }
   }
 
+
+
   private login = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
 
     try {
-      const logInData: AuthRequestDTO = request.body;
-      const loginResponse: RegistrationResponse = await this.AuthenticationService.login(logInData);
+      const logInData: AuthRequestDto = request.body;
+      const user: User = await this.AuthenticationService.validateLoginCredentials(logInData);
+      const tokenData: TokenData = this.AuthenticationService.createToken(user);
 
-      response.header("Access-Control-Allow-Origin","*");
-      response.header("Access-Control-Allow-Credentials","true");
+      // response.setHeader('Set-Cookie', [loginResponse.cookie]); // TODO in the future use cookies
 
-      response.setHeader('Set-Cookie', [loginResponse.cookie]);
-      response.send(new UserResponseDto(loginResponse.user))
+      response.send(new LoginResponseDTO(new UserResponseDTO(user), tokenData.token))
     } catch (error) {
       next(error)
     }

@@ -3,19 +3,16 @@
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import BaseHttpException from "../../exceptions/BaseHttpException";
 import UserWithThatEmailAlreadyExistsException from "../../exceptions/UserWithThatEmailAlreadyExistsException";
 import UserWithThatUserNameAlreadyExistsException from "../../exceptions/UserWithThatUserNameAlreadyExists";
 import WrongCredentialsException from "../../exceptions/WrongCredentialsException";
-import CreateUserDTO from "../users/data-transfer-objects/create-user.dto";
-import UserResponseDto from "../users/data-transfer-objects/user-response.dto";
-import User from "../users/interfaces/user.interface";
+import CreateUserDTO from "../users/types/data-transfer-objects/create-user.dto";
+import User from "../users/types/interfaces/user.interface";
 
 
 import userModel from '../users/user.model';
-import AuthRequestDTO from "./data-transfer-objects/auth-request-d-t.o";
+import AuthRequestDto from "./data-transfer-objects/auth-request.dto";
 import DataStoredInToken from "./interfaces/data-stored-in-token.interface";
-import RegistrationResponse from "./interfaces/registration-response.interface";
 
 // interface RegistrationResponse {
 //   cookie: string;
@@ -27,60 +24,73 @@ class AuthenticationService {
   private user = userModel;
 
 
-  public register = async (userData: CreateUserDTO):Promise<RegistrationResponse> => {
+  public register = async (userData: CreateUserDTO):Promise<User> => {
+
     if (await this.user.findOne({email: userData.email})) {
       throw new UserWithThatEmailAlreadyExistsException(userData.email);
     } else if (await this.user.findOne({username: userData.username})) {
       throw new UserWithThatUserNameAlreadyExistsException(userData.username);
     } else {
       const hashedPassword = await bcrypt.hash(userData.password, 10);
-      const user = await this.user.create({
+
+      return await this.user.create({
         ...userData,
         password: hashedPassword,
       });
-
-      const tokenData: TokenData = this.createTokenData(user);
-      const cookie = this.createCookie(tokenData);
-
-      const response: RegistrationResponse = {
-        cookie,
-        user
-      }
-
-      return response;
     }
   }
 
-  public login = async (logInData: AuthRequestDTO):Promise<RegistrationResponse> => {
-    const query = logInData.username.includes('@') ? {email: logInData.username} : {username: logInData.username};
+  public validateLoginCredentials = async (credentials: AuthRequestDto):Promise<User> => {
+    const query = credentials.username.includes('@') ? {email: credentials.username} : {username: credentials.username};
     const user = await this.user.findOne(query);
-
     if (user) {
-      const isPasswordMatching = await bcrypt.compare(logInData.password, user.password);
-      if (isPasswordMatching) {
+      const isAuthorized = await bcrypt.compare(credentials.password, user.password);
 
-
-        const tokenData: TokenData = this.createTokenData(user);
-        const cookie = this.createCookie(tokenData);
-        const response: RegistrationResponse = {
-          cookie,
-          user
-        }
-        return response;
+      if (isAuthorized) {
+        return user;
       } else {
-        throw new WrongCredentialsException(); // todo do I want separate exceptions for username/password?
+        throw new WrongCredentialsException();
       }
+
+
     } else {
       throw new WrongCredentialsException();
     }
   }
 
+  // public login = async (logInData: AuthRequestDto, asCookie=false):Promise<RegistrationResponse> => {
+  //
+  //
+  //     const isPasswordMatching = await bcrypt.compare(logInData.password, user.password);
+  //     if (isPasswordMatching) {
+  //
+  //
+  //       const tokenData: TokenData = this.createTokenData(user);
+  //       if (asCookie) {
+  //         const cookie = this.createCookie(tokenData);
+  //         const response: RegistrationResponse = {
+  //           cookie,
+  //           user
+  //         }
+  //       } else {
+  //         const response: RegistrationResponse = {
+  //
+  //         }
+  //       }
+  //
+  //
+  //       return response;
+  //     } else {
+  //       throw new WrongCredentialsException(); // todo do I want separate exceptions for username/password?
+  //     }
+  //
+  // }
 
   public createCookie(tokenData: TokenData): string {
     return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
   }
 
-  private createTokenData(user: User): TokenData {
+  public createToken(user: User): TokenData {
     const expiresIn = 60 * 60; // an hour
     const secret = process.env.JWT_SECRET;
     const dataStoredInToken: DataStoredInToken = {
@@ -93,6 +103,7 @@ class AuthenticationService {
       token: jwt.sign(dataStoredInToken, secret || "secret", {expiresIn}),
     };
   }
+
 
 }
 

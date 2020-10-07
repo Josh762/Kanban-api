@@ -30,11 +30,15 @@ class App {
     }
 
     public listen() {
-        https.createServer({
-            key: fs.readFileSync('server.key'),
-            cert: fs.readFileSync('server.cert')
-        }, this.app)
-          .listen(process.env.PORT, () => {
+        // https.createServer({ // TODO Fix SSL
+        //     key: fs.readFileSync('.cert/localhost.key'),
+        //     cert: fs.readFileSync('.cert/localhost.cert')
+        // }, this.app)
+        //   .listen(process.env.PORT, () => {
+        //     console.log(`App listening on the port ${process.env.PORT}`);
+        // });
+
+        this.app.listen(process.env.PORT, () => {
             console.log(`App listening on the port ${process.env.PORT}`);
         });
     }
@@ -53,7 +57,7 @@ class App {
     private initializeCors() {
         this.app.use(cors());
         const whitelist = [
-            'https://0.0.0.0:3001', 'https://localhost:3001', 'https://0.0.0.0:7075', 'https://localhost:7075', 'http://localhost:7075'
+            'http://0.0.0.0:3001', 'http://localhost:3001', 'http://0.0.0.0:7075', 'http://localhost:7075/', 'http://localhost:7075'
         ];
         const corsOptions = {
             origin: function(origin:any, callback:any){
@@ -62,9 +66,9 @@ class App {
             },
             credentials: true,
             methods: 'GET,POST'
+
         };
-        console.log('hereherehere')
-        this.app.use(cors(corsOptions));
+        // this.app.use(cors(corsOptions));
 
     }
 

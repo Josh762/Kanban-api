@@ -1,8 +1,14 @@
 import mongoose, {Types} from 'mongoose';
-import FlowNode from './interfaces/flowNode.interface';
+import FlowNode from '../types/interfaces/flowNode.interface';
 
 const flowNodeSchema = new mongoose.Schema({
   status: String,
+  tasks: [
+    {
+      ref: 'Task',
+      type: mongoose.Schema.Types.ObjectId
+    }
+  ],
   to: [
     {
       ref: 'FlowNode',
