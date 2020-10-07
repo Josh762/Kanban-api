@@ -3,10 +3,10 @@ import 'dotenv/config';
 import validateEnv from './utils/validateEnv';
 import middleware from "./middleware";
 
-import AuthenticationController from "./api/authentication/authentication.controller"
-import BoardsController from "./api/boards/boards.controller";
-import WorkflowsController from "./api/workflows/workflows.controller";
-import TasksController from './api/tasks/tasks.controller';
+import AuthenticationController from "./api/controllers/authentication.controller"
+import BoardsController from "./api/controllers/boards.controller";
+import WorkflowsController from "./api/controllers/workflows.controller";
+import TasksController from './api/controllers/tasks.controller';
 
 validateEnv();
 
