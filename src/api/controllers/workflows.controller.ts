@@ -22,8 +22,8 @@ class WorkflowsController {
 
     initializeRoutes() {
         this.router
-            .all(`${this.path}*`, authMiddleware, validateBodyMiddleware(CreateWorkflowDTO))
-            .post(`${this.path}`, this.createWorkflow)
+            .all(`${this.path}*`, authMiddleware)
+            .post(`${this.path}`, validateBodyMiddleware(CreateWorkflowDTO), this.createWorkflow)
             .get(`${this.path}`, this.getAllWorkflows);
     }
 

@@ -1,14 +1,15 @@
 GET http://localhost:3001/api/v1/boards
 Accept: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNhM2I0NWNmNDMyODM0ZThmYjliOTYiLCJpYXQiOjE2MDIwMzY0NDQsImV4cCI6MTYwMjA0MDA0NH0.88V_AyhT829dcfDtnL2F3lbqbaBgWSjukqYt9WLHsO0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNhM2I0NWNmNDMyODM0ZThmYjliOTYiLCJpYXQiOjE2MDIwNDA0ODAsImV4cCI6MTYwMjA0NDA4MH0.yL6Bs1UdVz0cNOxFjvs3q65eGAFai8u8EI8f9ZuzGKA
 
 ###
 POST http://localhost:3001/api/v1/boards
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNhM2I0NWNmNDMyODM0ZThmYjliOTYiLCJpYXQiOjE2MDE0Mjk1MDksImV4cCI6MTYwMTQzMzEwOX0.Rf31sRTT7fnHT_mYb_qvNAub4IR1XhUHOJtwbevP5_s
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNhM2I0NWNmNDMyODM0ZThmYjliOTYiLCJpYXQiOjE2MDIwNDA0ODAsImV4cCI6MTYwMjA0NDA4MH0.yL6Bs1UdVz0cNOxFjvs3q65eGAFai8u8EI8f9ZuzGKA
 
 {
-  "title": "another board!"
+  "title": "another board!asdfasdf",
+  "workflowId": ""
 }
 
 ###

@@ -1,9 +1,9 @@
 import express from "express";
 
-import boardModel from '../data-access-models/boards.model';
-import BoardDTO from '../../types/data-transfer-objects/boards/board.dto';
 import BoardsService from "../services/boards.service";
 import authMiddleware from "../../middleware/auth.middleware";
+import validateBodyMiddleware from "../../middleware/validate-body.middleware";
+import CreateBoardDTO from "../../types/data-transfer-objects/boards/create-board.dto";
 
 
 class BoardsController {
@@ -12,38 +12,31 @@ class BoardsController {
   private service = new BoardsService();
 
   constructor() {
-    this.initializeRoutes();
+    this.router
+        .all(`${this.path}*`, authMiddleware)
+        .post(`${this.path}`, validateBodyMiddleware(CreateBoardDTO), this.createBoard)
+        .get(`${this.path}`, this.getAllBoardsForUser);
   }
 
-  initializeRoutes() {
-    //todo use auth middleware
-    this.router.post(`${this.path}`, authMiddleware, this.createBoard)
-    this.router.get(`${this.path}`, authMiddleware, this.getAllBoardsForUser)
-  }
+  // TODO, update/delete methods
 
   private createBoard = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
     try {
-      let newBoard = request.body;
       //@ts-ignore
-      newBoard.owner = request.user._id;
-      // const board = new BoardDTO(request.body);
-      const createdData = await this.service.createBoard(newBoard);
-      response.send(createdData);
+      request.body.owner = request.user._id; // todo add user to request type
+      response.send(await this.service.createBoard(request.body));
     } catch (e) {
-      console.log(e) // todo, handle error
+      next(e);
     }
   }
 
   private getAllBoardsForUser = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
     // todo return stubs by default.. return detail by request
     try {
-      //default case
       // @ts-ignore todo add user to request interface
-      const boards = await this.service.getAllBoardStubs(request.user['_id']);
-
-      response.send(boards);
+      response.send(await this.service.getAllBoardStubs(request.user['_id']));
     } catch (e) {
-      console.log(e); // todo, handle error
+      next(e);
     }
   }
 }
