@@ -2,11 +2,9 @@ import express from 'express';
 import authMiddleware from "../../middleware/auth.middleware";
 import validateBodyMiddleware from "../../middleware/validate-body.middleware";
 import CreateWorkflowDTO from "../../types/interface/workflows/createWorkflowDTO";
-import WorkflowDTO from "../../types/interface/workflows/Workflow.dto";
 import WorkflowsService from "../services/workflows.service";
-
-class FlowNodeDTO {
-}
+import CreateFlowNodeDTO from "../../types/data-transfer-objects/workflows/CreateFlowNode.dto";
+import {Types} from "mongoose";
 
 class WorkflowsController {
     public path = '/workflows';
@@ -15,23 +13,28 @@ class WorkflowsController {
     private WorkflowsService = new WorkflowsService();
 
     constructor() {
-        this.initializeRoutes();
-        console.log(this.WorkflowsService);
-
-    }
-
-    initializeRoutes() {
         this.router
             .all(`${this.path}*`, authMiddleware)
             .post(`${this.path}`, validateBodyMiddleware(CreateWorkflowDTO), this.createWorkflow)
+            // .post(`${this.path}/:workflowId/flownodes/:flownodeId`, validateBodyMiddleware(CreateFlowNodeDTO), this.insertFlowNode)
+            .post(`${this.path}/:workflowId/flownodes`, validateBodyMiddleware(CreateFlowNodeDTO), this.createFlowNode)
+            .get(`${this.path}/:workflowId`, this.getWorkflow)
             .get(`${this.path}`, this.getAllWorkflows);
+
     }
 
-    private createWorkflow = async (request: express.Request, response: express.Response, next: express.NextFunction): WorkflowDTO => {
+    private createWorkflow = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
         try {
-            const workflowData: CreateWorkflowDTO = request.body;
-            const data = await this.WorkflowsService.createWorkflow(workflowData, request.user);
-            response.send(new WorkflowDTO(data));
+            // @ts-ignore
+            response.send(await this.WorkflowsService.createWorkflow(request.body, request.user));
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    private getWorkflow = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+        try {
+            response.send(await this.WorkflowsService.getWorkflow(Types.ObjectId(request.params.workflowId)))
         } catch (e) {
             next(e);
         }
@@ -39,18 +42,25 @@ class WorkflowsController {
 
     private getAllWorkflows = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
         try {
-            const data: WorkflowDTO[] = await this.WorkflowsService.getWorkflowsForUser(request.user._id);
-            response.send(data)
+            // @ts-ignore
+            response.send(await this.WorkflowsService.getWorkflowsForUser(request.user._id))
         } catch (e) {
             next(e);
         }
     }
 
-    private insertFlowNode = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+    // // todo, probably don't need this. should probably use an update workflow function.
+    // private insertFlowNode = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+    //     // try {
+    //     //     response.send(await this.WorkflowsService.createFlowNode(Types.ObjectId(request.params.workflowId), Types.ObjectId(request.params.flownodeId)));
+    //     // } catch (e) {
+    //     //     next(e);
+    //     // }
+    // }
+
+    private createFlowNode = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
         try {
-            const newFlowNode: FlowNodeDTO = request.body();
-            await this.WorkflowsService.insertFlowNode();
-            response.status(200);
+            response.send(await this.WorkflowsService.createFlowNode(request.body));
         } catch (e) {
             next(e);
         }
