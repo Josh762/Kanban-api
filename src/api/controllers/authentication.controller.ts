@@ -4,13 +4,14 @@ import CreateUserDTO from '../../types/data-transfer-objects/users/create-user.d
 import UserResponseDto from "../../types/data-transfer-objects/users/user-response.dto";
 
 import AuthenticationService from '../services/authentication.service';
-import AuthRequestDto from "../../types/data-transfer-objects/authentication/auth-request.dto";
+import AuthRequestDTO from "../../types/data-transfer-objects/authentication/auth-request.dto";
 import RegistrationResponse from "../../types/interface/authentication/registration-response.interface";
 
 import LoginResponseDTO from "../../types/data-transfer-objects/authentication/login-response.dto";
 import LoginResponse from "../../types/interface/authentication/login-response.interface";
 import User from "../../types/interface/users/user.interface";
 import UserResponseDTO from "../../types/data-transfer-objects/users/user-response.dto";
+
 class AuthenticationController {
   public path = '/auth';
   public router = express.Router();
@@ -18,12 +19,8 @@ class AuthenticationController {
 
 
   constructor() {
-    this.initializeRoutes();
-  }
-
-  public initializeRoutes() {
     this.router.post(`${this.path}/register`, validateBodyMiddleware(CreateUserDTO), this.registerNewUser);
-    this.router.post(`${this.path}/login`, this.login);
+    this.router.post(`${this.path}/login`, validateBodyMiddleware(AuthRequestDTO), this.login);
     this.router.post(`${this.path}/logout`, this.logOut);
   }
 
@@ -35,7 +32,7 @@ class AuthenticationController {
       const tokenData: TokenData = this.AuthenticationService.createToken(user);
 
       // response.setHeader('Set-Cookie', [registerResp.cookie]);
-      response.send(new LoginResponseDTO(new UserResponseDTO(user), tokenData.token));
+      response.send(new LoginResponseDTO(new UserResponseDTO(user), tokenData.token)); // todo creating these objects seems needlessly expensive?
     } catch (e) {
       next(e)
     }
@@ -46,11 +43,8 @@ class AuthenticationController {
   private login = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
 
     try {
-      const logInData: AuthRequestDto = request.body;
-      const user: User = await this.AuthenticationService.validateLoginCredentials(logInData);
+      const user: User = await this.AuthenticationService.validateLoginCredentials(request.body);
       const tokenData: TokenData = this.AuthenticationService.createToken(user);
-
-      // response.setHeader('Set-Cookie', [loginResponse.cookie]); // TODO in the future use cookies
 
       response.send(new LoginResponseDTO(new UserResponseDTO(user), tokenData.token))
     } catch (error) {
@@ -60,7 +54,7 @@ class AuthenticationController {
   }
 
   private logOut = (request: express.Request, response: express.Response) => {
-    response.setHeader('Set-Cookie', ['Authorization=;Max-age=0']);
+    response.setHeader('Set-Cookie', ['Authorization=;Max-age=0']); // todo cookies coming in the future...
     response.send(200);
   }
 

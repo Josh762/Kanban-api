@@ -11,7 +11,7 @@ import User from "../../types/interface/users/user.interface";
 
 
 import userModel from '../data-access-models/user.model';
-import AuthRequestDto from "../../types/data-transfer-objects/authentication/auth-request.dto";
+import AuthRequestDTO from "../../types/data-transfer-objects/authentication/auth-request.dto";
 import DataStoredInToken from "../../types/interface/authentication/data-stored-in-token.interface";
 
 // interface RegistrationResponse {
@@ -40,7 +40,7 @@ class AuthenticationService {
     }
   }
 
-  public validateLoginCredentials = async (credentials: AuthRequestDto):Promise<User> => {
+  public validateLoginCredentials = async (credentials: AuthRequestDTO):Promise<User> => {
     const query = credentials.username.includes('@') ? {email: credentials.username} : {username: credentials.username};
     const user = await this.user.findOne(query);
     if (user) {
