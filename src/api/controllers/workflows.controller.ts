@@ -1,5 +1,4 @@
 import express from 'express';
-import authMiddleware from "../../middleware/auth.middleware";
 import validateBodyMiddleware from "../../middleware/validate-body.middleware";
 import CreateWorkflowDTO from "../../types/interface/workflows/createWorkflowDTO";
 import WorkflowsService from "../services/workflows.service";
@@ -14,10 +13,10 @@ class WorkflowsController {
 
     constructor() {
         this.router
-            .all(`${this.path}*`, authMiddleware)
+            .all(`${this.path}*`)
             .post(`${this.path}`, validateBodyMiddleware(CreateWorkflowDTO), this.createWorkflow)
             // .post(`${this.path}/:workflowId/flownodes/:flownodeId`, validateBodyMiddleware(CreateFlowNodeDTO), this.insertFlowNode)
-            .post(`${this.path}/:workflowId/flownodes`, validateBodyMiddleware(CreateFlowNodeDTO), this.createFlowNode)
+            .post(`${this.path}/flownode`, validateBodyMiddleware(CreateFlowNodeDTO), this.createFlowNode)
             .get(`${this.path}/:workflowId`, this.getWorkflow)
             .get(`${this.path}`, this.getAllWorkflows);
 

@@ -1,9 +1,9 @@
 import express from "express";
 
 import BoardsService from "../services/boards.service";
-import authMiddleware from "../../middleware/auth.middleware";
 import validateBodyMiddleware from "../../middleware/validate-body.middleware";
 import CreateBoardDTO from "../../types/data-transfer-objects/boards/create-board.dto";
+import {Types} from "mongoose";
 
 
 class BoardsController {
@@ -13,8 +13,9 @@ class BoardsController {
 
   constructor() {
     this.router
-        .all(`${this.path}*`, authMiddleware)
+        .all(`${this.path}*`)
         .post(`${this.path}`, validateBodyMiddleware(CreateBoardDTO), this.createBoard)
+        .get(`${this.path}/:boardId`, this.getBoard)
         .get(`${this.path}`, this.getAllBoardsForUser);
   }
 
@@ -35,6 +36,23 @@ class BoardsController {
     try {
       // @ts-ignore todo add user to request interface
       response.send(await this.service.getAllBoardStubs(request.user['_id']));
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  private getBoard = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+    try {
+      /*
+        todo, possibly need a middleware that does all the heavy lifting of checking
+         if query param exists and if it has a value of true.
+         Should have a couple of these that throw exceptions if the arg is not something expected.
+      */
+      if (Object.keys(request.query).includes('stub')) {
+        response.send(await this.service.getBoardStub(Types.ObjectId(request.params.boardId)));
+      } else {
+        response.send(await this.service.getBoardDetails(Types.ObjectId(request.params.boardId)));
+      }
     } catch (e) {
       next(e);
     }

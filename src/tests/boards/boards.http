@@ -1,3 +1,9 @@
+GET http://localhost:3001/api/v1/boards/5f7d32b4fa97f3a7ce4a8d6b
+Content-Type: application/json
+
+
+
+###
 GET http://localhost:3001/api/v1/boards
 Accept: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNhM2I0NWNmNDMyODM0ZThmYjliOTYiLCJpYXQiOjE2MDIwNDA0ODAsImV4cCI6MTYwMjA0NDA4MH0.yL6Bs1UdVz0cNOxFjvs3q65eGAFai8u8EI8f9ZuzGKA
@@ -13,6 +19,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNhM2I0NWNmNDMy
 }
 
 ###
+
+
 
 
 
