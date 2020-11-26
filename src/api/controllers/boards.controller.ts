@@ -1,9 +1,12 @@
 import express from "express";
+import { Types } from "mongoose";
+
+import authMiddleware from "../../middleware/auth.middleware";
+import validateBodyMiddleware from "../../middleware/validate-body.middleware";
 
 import BoardsService from "../services/boards.service";
-import validateBodyMiddleware from "../../middleware/validate-body.middleware";
 import CreateBoardDTO from "../../types/data-transfer-objects/boards/create-board.dto";
-import {Types} from "mongoose";
+
 
 
 class BoardsController {
@@ -13,10 +16,10 @@ class BoardsController {
 
   constructor() {
     this.router
-        .all(`${this.path}*`)
-        .post(`${this.path}`, validateBodyMiddleware(CreateBoardDTO), this.createBoard)
-        .get(`${this.path}/:boardId`, this.getBoard)
-        .get(`${this.path}`, this.getAllBoardsForUser);
+      .all(`${this.path}*`, authMiddleware)
+      .post(`${this.path}`, validateBodyMiddleware(CreateBoardDTO), this.createBoard)
+      .get(`${this.path}/:boardId`, this.getBoard)
+      .get(`${this.path}`, this.getAllBoardsForUser);
   }
 
   // TODO, update/delete methods

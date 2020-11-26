@@ -1,10 +1,10 @@
 import express from 'express';
-import * as fs from "fs";
+import * as fs from 'fs';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import https from 'https';
-import corsMiddleware from "./middleware/add-cors-headers.middleware";
-import errorMiddleware from "./middleware/error.middleware";
+import corsMiddleware from './middleware/add-cors-headers.middleware';
+import errorMiddleware from './middleware/error.middleware';
 
 class App {
     public app: express.Application;
@@ -69,6 +69,10 @@ class App {
 
         };
         // this.app.use(cors(corsOptions));
+
+    }
+
+    private initializeWebsockets() {
 
     }
 

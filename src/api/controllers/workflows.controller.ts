@@ -1,9 +1,12 @@
 import express from 'express';
-import validateBodyMiddleware from "../../middleware/validate-body.middleware";
-import CreateWorkflowDTO from "../../types/interface/workflows/createWorkflowDTO";
-import WorkflowsService from "../services/workflows.service";
-import CreateFlowNodeDTO from "../../types/data-transfer-objects/workflows/CreateFlowNode.dto";
 import {Types} from "mongoose";
+
+import authMiddleware from '../../middleware/auth.middleware';
+import validateBodyMiddleware from "../../middleware/validate-body.middleware";
+
+import WorkflowsService from "../services/workflows.service";
+import CreateWorkflowDTO from "../../types/interface/workflows/createWorkflowDTO";
+import CreateFlowNodeDTO from "../../types/data-transfer-objects/workflows/CreateFlowNode.dto";
 
 class WorkflowsController {
     public path = '/workflows';
@@ -13,7 +16,7 @@ class WorkflowsController {
 
     constructor() {
         this.router
-            .all(`${this.path}*`)
+            .all(`${this.path}*`, authMiddleware)
             .post(`${this.path}`, validateBodyMiddleware(CreateWorkflowDTO), this.createWorkflow)
             // .post(`${this.path}/:workflowId/flownodes/:flownodeId`, validateBodyMiddleware(CreateFlowNodeDTO), this.insertFlowNode)
             .post(`${this.path}/flownode`, validateBodyMiddleware(CreateFlowNodeDTO), this.createFlowNode)

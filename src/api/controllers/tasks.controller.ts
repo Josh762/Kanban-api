@@ -1,16 +1,16 @@
 import express from 'express';
+import { Types } from 'mongoose';
 
-import authMiddleware from "../../middleware/auth.middleware";
+import authMiddleware from '../../middleware/auth.middleware';
 import validateBodyMiddleware from "../../middleware/validate-body.middleware";
 
-import {Types} from "mongoose";
-import CreateTaskDTO from "../../types/data-transfer-objects/tasks/create-task.dto";
-import TaskDTO from "../../types/data-transfer-objects/tasks/task.dto";
-
 import TasksService from '../services/tasks.service';
+import CreateTaskDTO from '../../types/data-transfer-objects/tasks/create-task.dto';
+import TaskDTO from '../../types/data-transfer-objects/tasks/task.dto';
+
 
 class TasksController {
-    public path = '/tasks';
+    public path = '/tasks'; // TODO these base paths could probably be in a config? What are the benefits?
     public router = express.Router();
     private service = new TasksService();
 
