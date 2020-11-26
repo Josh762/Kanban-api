@@ -72,10 +72,6 @@ class App {
 
     }
 
-    private initializeWebsockets() {
-
-    }
-
     private initializeControllers(controllers:any) {
         controllers.forEach((controller:any) => {
             this.app.use(`/api/${this.version}`, controller.router);

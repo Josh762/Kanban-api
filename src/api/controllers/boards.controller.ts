@@ -1,11 +1,11 @@
-import express from "express";
-import { Types } from "mongoose";
+import express from 'express';
+import { Types } from 'mongoose';
 
-import authMiddleware from "../../middleware/auth.middleware";
-import validateBodyMiddleware from "../../middleware/validate-body.middleware";
+import authMiddleware from '../../middleware/auth.middleware';
+import validateBodyMiddleware from '../../middleware/validate-body.middleware';
 
-import BoardsService from "../services/boards.service";
-import CreateBoardDTO from "../../types/data-transfer-objects/boards/create-board.dto";
+import BoardsService from '../services/boards.service';
+import CreateBoardDTO from '../../types/data-transfer-objects/boards/create-board.dto';
 
 
 

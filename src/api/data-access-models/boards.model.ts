@@ -1,4 +1,4 @@
-import mongoose, {Types} from 'mongoose';
+import mongoose from 'mongoose';
 import Board from '../../types/interface/boards/board.interface';
 
 
@@ -6,6 +6,7 @@ const boardSchema = new mongoose.Schema({
   owner: mongoose.Schema.Types.ObjectId,
   assignee: mongoose.Schema.Types.ObjectId,
   title: mongoose.Schema.Types.String,
+  description: mongoose.Schema.Types.String,
   // projectId: mongoose.Schema.Types.ObjectId, // todo, future?
   workflow: {
     ref: 'Workflow',

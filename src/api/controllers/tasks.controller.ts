@@ -2,7 +2,7 @@ import express from 'express';
 import { Types } from 'mongoose';
 
 import authMiddleware from '../../middleware/auth.middleware';
-import validateBodyMiddleware from "../../middleware/validate-body.middleware";
+import validateBodyMiddleware from '../../middleware/validate-body.middleware';
 
 import TasksService from '../services/tasks.service';
 import CreateTaskDTO from '../../types/data-transfer-objects/tasks/create-task.dto';
